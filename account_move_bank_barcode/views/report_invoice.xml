@@ -1,0 +1,27 @@
+<odoo>
+
+    <template id="bank_barcode_external_layout_custom_img" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[hasclass('col-3')]/img" position="attributes">
+            <attribute name="style">max-height: 64px;</attribute>
+        </xpath>
+    </template>
+
+   <template id="bank_barcode_report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath expr="//span[@t-field='o.narration']" position="after">
+            <div style="width: 50%; display: inline-table; height: 2rem;">
+                <table class="table table-bordered mb-0" style="border: 2px solid black;">
+                    <tr>
+                        <td class="text-center align-middle" style="height: 6rem;">
+                            <t t-if="o.bank_barcode">
+                                <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', quote_plus(o.bank_barcode or ''), 600, 150)" style="width:100%;height:4rem"/>
+                                <span t-field="o.bank_barcode"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>
+
+
